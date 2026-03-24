@@ -35,6 +35,5 @@ jobs:
         with:
           name: pake-windows
           path: |
-            **/*.exe
-            **/*.msi
-            **/bundle/**
+            ${{ github.workspace }}\*.msi
+            ${{ github.workspace }}\*.exe
