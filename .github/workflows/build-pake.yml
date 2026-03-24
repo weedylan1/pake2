@@ -35,5 +35,6 @@ jobs:
         with:
           name: pake-windows
           path: |
-            **/dist/**
-            **/target/release/bundle/**
+            **/*.exe
+            **/*.msi
+            **/bundle/**
