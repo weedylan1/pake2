@@ -1,16 +1,11 @@
-
-name: Build Pake App
+name: Build Windows Pake App
 
 on:
   workflow_dispatch:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        os: [windows-latest, ubuntu-latest, macos-latest]
-
-    runs-on: ${{ matrix.os }}
+    runs-on: windows-latest
 
     steps:
       - name: Checkout repo
@@ -21,28 +16,24 @@ jobs:
         with:
           node-version: 22
 
-      - name: Install pnpm
-        run: npm install -g pnpm
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
 
-      - name: Install Rust
+      - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
 
-      - name: Install Linux packages
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libwebkit2gtk-4.1-dev build-essential curl wget file libxdo-dev libssl-dev libayatana-appindicator3-dev librsvg2-dev
-
       - name: Install Pake
-        run: pnpm install -g pake-cli
+        run: pnpm add -g pake-cli
 
       - name: Build app
-        run: pake https://your-app-url.com/subfolder --name "My App"
+        run: pake https://example.com --name "Test App"
 
-      - name: Upload artifact
+      - name: Upload result
         uses: actions/upload-artifact@v4
         with:
-          name: pake-${{ matrix.os }}
+          name: pake-windows
           path: |
             **/dist/**
             **/target/release/bundle/**
