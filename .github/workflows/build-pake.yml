@@ -28,7 +28,7 @@ jobs:
         run: pnpm add -g pake-cli
 
       - name: Build app
-        run: pake https://example.com --name "Test App"
+        run: pake https://jester.click/jesterpad --name "JesterPad"
 
       - name: Collect installer
         shell: pwsh
